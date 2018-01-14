@@ -1,5 +1,6 @@
+import { AlbumSearchService } from '../album-search.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
 
 
 
@@ -11,26 +12,23 @@ import { HttpClient } from '@angular/common/http';
 
 export class PostsComponent implements OnInit {
 
-  constructor(private http: HttpClient ) {}
-  	posts;
-  	private url = 'https://jsonplaceholder.typicode.com/posts';
+  constructor(private service: AlbumSearchService) {}
+  posts: any;
+
 
   ngOnInit() {
-  	this.http.get(this.url)
+  	this.service.getPosts()
     .subscribe( data => {
     	this.posts = data;
     	console.log(this.posts);
     });
   }
 
-  getPosts(){
-
-  }
 
   createPost(input) {
   	let post = {title: input.value};
   	input.value="";
-  	this.http.post(this.url, post)
+  	this.service.createPost(post)
   		.subscribe(response => {
   			// post.id = response.id;
   			console.log(response)
@@ -39,14 +37,14 @@ export class PostsComponent implements OnInit {
   }
 
   updatePost(post) {
-  	this.http.put(this.url + '/' + post.id, post)
+  	this.service.updatePost(post)
   		.subscribe( response => {
   			console.log(response);
   		})
   }
 
   deletePost(post) {
-  	this.http.delete(this.url + '/' + post.id)
+  	this.service.deletePost(post)
   		.subscribe(response => {
   			console.log(response);
   			let index = this.posts.indexOf(post);

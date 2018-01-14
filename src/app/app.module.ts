@@ -15,7 +15,7 @@ import { PostsComponent } from './posts/posts.component';
     HttpClientModule
   ],
   providers: [
-  AlbumSearchService
+  AlbumSearchService,
   ],
   bootstrap: [AppComponent]
 })
